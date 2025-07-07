@@ -129,11 +129,13 @@ public class SecurityConfig {
                 .clientId("client") // Changed from "api-client" to "client"
                 .clientSecret("{noop}secret") // NoOp for testing
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+                .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
+                .authorizationGrantType(AuthorizationGrantType.PASSWORD) // <--- ADD THIS LINE
                 .redirectUri("http://localhost/callback") // Added placeholder redirect URI
-                // All .scope() calls removed for this client for diagnostic purposes
+                .scope("message.read")
                 .tokenSettings(TokenSettings.builder()
                         .accessTokenTimeToLive(Duration.ofHours(1))
                         .build())
