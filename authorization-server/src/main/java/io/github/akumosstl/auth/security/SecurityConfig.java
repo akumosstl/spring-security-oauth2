@@ -134,6 +134,7 @@ public class SecurityConfig {
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
                 .redirectUri("http://localhost/callback") // Added placeholder redirect URI
                 .scope("message.read")
+                .scope("openid") // Added openid scope
                 .tokenSettings(TokenSettings.builder()
                         .accessTokenTimeToLive(Duration.ofHours(1))
                         .build())
