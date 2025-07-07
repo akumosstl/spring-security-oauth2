@@ -1,0 +1,35 @@
+server:
+  port: 8080
+
+spring:
+  cloud:
+    compatibility-verifier.enabled: false
+    gateway:
+      default-filters:
+        - TokenRelay=
+      routes:
+        - id: resource-server
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/**
+          filters:
+            - name: AuthBasic2Jwt
+  security:
+    oauth2:
+      client:
+        registration:
+          custom:
+            client-id: client
+            client-secret: secret
+            authorization-grant-type: password
+            scope: openid
+        provider:
+          custom:
+            token-uri: http://localhost:9000/oauth2/token
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:9000/.well-known/jwks.json
+
+logging:
+  level:
+    org.springframework.security: TRACE
