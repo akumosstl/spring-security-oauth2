@@ -129,15 +129,19 @@ public class SecurityConfig {
                 .clientId("client") // Changed from "api-client" to "client"
                 .clientSecret("{noop}secret") // NoOp for testing
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
-                .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
-                .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
-                .authorizationGrantType(AuthorizationGrantType.PASSWORD) // <--- ADD THIS LINE
-                .redirectUri("http://localhost/callback") // Added placeholder redirect URI
+                .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
+                // PASSWORD grant type removed due to deprecation and issues
+                .redirectUri("http://localhost/callback")
                 .scope("message.read")
+                .scope("openid")
                 .tokenSettings(TokenSettings.builder()
                         .accessTokenTimeToLive(Duration.ofHours(1))
+                        .build())
+                .clientSettings(org.springframework.security.oauth2.server.authorization.settings.ClientSettings.builder()
+                        .requireProofKey(true) // Enforce PKCE
+                        .requireAuthorizationConsent(true) // Standard for authorization code flow
                         .build())
                 .build();
 
