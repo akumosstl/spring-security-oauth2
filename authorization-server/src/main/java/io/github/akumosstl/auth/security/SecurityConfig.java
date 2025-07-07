@@ -126,7 +126,7 @@ public class SecurityConfig {
     @Bean
     public RegisteredClientRepository registeredClientRepository() {
         RegisteredClient apiClient = RegisteredClient.withId(UUID.randomUUID().toString())
-                .clientId("api-client")
+                .clientId("client") // Changed from "api-client" to "client"
                 .clientSecret("{noop}secret") // NoOp for testing
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
